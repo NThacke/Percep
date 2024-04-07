@@ -5,6 +5,7 @@ public class Main {
 
         for(int i = 2; i <= 10; i++) {
             double threshold = (i)/(10.0);
+            System.out.println(threshold);
             Driver driver = new Driver(threshold);
             driver.train();
             // driver.validation();
