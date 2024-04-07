@@ -1,65 +1,78 @@
-// import model.faces.*;
-import model.digits.*;
+import model.faces.*;
+// import model.digits.*;
 
 public class Main {
+
+    private static final Driver best_face = new Driver(168, 5, 5, 0.5); //91.3 % accuracy
 
     private static final int[][] face_dimensions = {{42, 10, 10}, {168, 5, 5}, {1050, 2, 2}, {4200, 1, 1}};
     public static void main(String[] args) {
         // train_digits();
-        digits();
+        // digits();x
+        // incorrect_digits();
+        // digit_demo();
+        face_demo();
     
     }
 
-    private static void digits() {
-        double best = 0.0;
-        double threshold = 0.0;
-        for(int i = 1; i<= 10;i++) {
-            double d = i / (10.0);
-            Driver driver = new Driver(d);
-            // driver.validation();
-            driver.test();
-            double acc = driver.acc;
-            if(acc > best) {
-                best = acc;
-                threshold = d;
-            }
-        }
-        System.out.println("Best accuracy is " + best + " at threshold " + threshold);
+    private static void face_demo() {
+        best_face.test();
     }
 
-    private static void train_digits() {
-        for(int i = 1; i<= 10;i++) {
-            double d = i / (10.0);
-            Driver driver = new Driver(d);
-            driver.train();
-        }
-    }
+    // private static void digit_demo() {
+    //     Driver driver = new Driver(0.8);
+    //     driver.demo();
+    // }
 
-    // private static void faces() {
+    // private static void incorrect_digits() {
+    //     Driver driver = new Driver(0.8);
+    //     driver.incorrect_digits();
+    // }
+
+    // private static void digits() {
     //     double best = 0.0;
-    //     double t = 0.0;
-
-    //     Driver best_d = null;
-
-    //     for(int f = 0; f < face_dimensions.length; f++) {
-    //         int n = face_dimensions[f][0];
-    //         int a = face_dimensions[f][1];
-    //         int b = a;
-    //         System.out.println("N : " + n + " A : " + a + " B : " + b);
-    //         for(int i = 1; i<=10; i++) {
-    //             double threshold = i/10.0;
-    //             Driver d = new Driver(n, a, b, threshold);
-    //             // d.train();
-    //             // d.validation();
-    //             d.test();
-    //             if(d.acc() > best) {
-    //                 best =  d.acc();
-    //                 t = threshold;
-    //                 best_d = d;
-    //             }
+    //     double threshold = 0.0;
+    //     for(int i = 1; i<= 10;i++) {
+    //         double d = i / (10.0);
+    //         Driver driver = new Driver(d);
+    //         // driver.validation();
+    //         driver.test();
+    //         double acc = driver.acc;
+    //         if(acc > best) {
+    //             best = acc;
+    //             threshold = d;
     //         }
     //     }
-    //     System.out.println(best_d.toString());
-    //     System.out.println("The best accuracy is " + best + " at threshold " + t);
+    //     System.out.println("Best accuracy is " + best + " at threshold " + threshold);
     // }
+
+    // private static void train_digits() {
+    //     for(int i = 1; i<= 10;i++) {
+    //         double d = i / (10.0);
+    //         Driver driver = new Driver(d);
+    //         driver.train();
+    //     }
+    // }
+
+    private static void faces() {
+        double best = 0.0;
+        Driver best_driver = null;
+
+        for(int i = 0; i <face_dimensions.length; i++) {
+            int n = face_dimensions[i][0];
+            int a = face_dimensions[i][1];
+            int b = a;
+            for(int j = 1; j<= 10; j++) {
+                double threshold = j / 10.0;
+                Driver d = new Driver(n, a, b, threshold);
+                d.test();
+                if(d.acc() > best) {
+                    best = d.acc();
+                    best_driver = d;
+                }
+            }
+        }
+        System.out.println(best_driver.toString());
+        System.out.println(best);
+    }
 }

@@ -34,6 +34,48 @@ public class Driver {
         this.threshold = threshold;
     }
 
+    public void incorrect_digits() {
+        loadImages(Util.DIGIT_TEST_DATA);
+        loadLabels(Util.DIGIT_TEST_LABELS);
+        load();
+        for(int i = 0; i < images.size(); i++) {
+            Image image = images.get(i);
+            double max_f = -1.0;
+            int answer = -1;
+            for(int j = 0; j < perceptrons.length; j++) {
+                Perceptron p = perceptrons[j];
+                double f = p.f(image);
+                if(f > max_f) {
+                    max_f = f;
+                    answer = j;
+                }
+            }
+            if(answer != labels[image.getID()]) {
+                System.out.println(image);
+                System.out.println("Model : " + answer + " Label : " + labels[image.getID()]);                
+            }
+        }
+    }
+    public void demo() {
+        loadImages(Util.DIGIT_TEST_DATA);
+        loadLabels(Util.DIGIT_TEST_LABELS);
+        load();
+        for(int i = 0; i < 20; i++) {
+            Image image = images.remove(Util.random.nextInt(images.size()));
+            int answer = -1;
+            double max = -1.0;
+            for(int j = 0; j< perceptrons.length; j++) {
+                double f = perceptrons[j].f(image);
+                if(f > max) {
+                    max = f;
+                    answer = j;
+                }
+            }
+            System.out.println(image);
+            System.out.print("Model's answer : '" + answer + "' True Label : '" + labels[image.getID()] + "'");
+        }
+    }
+
     public void validation() {
         loadImages(Util.DIGIT_VALIDATION_DATA);
         loadLabels(Util.DIGIT_VALIDATION_LABELS);
