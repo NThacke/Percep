@@ -15,7 +15,7 @@ public class Driver {
 
     private double threshold;
 
-    private int TRAINING_COUNT = 10000;
+    private int TRAINING_COUNT = 1000000;
 
     private int[] labels;
 
@@ -36,7 +36,7 @@ public class Driver {
         getTrainingSet();
         long start = System.currentTimeMillis();
         while(cnt < TRAINING_COUNT) {
-            if(cnt % 1000 == 0) {
+            if(cnt % 100000 == 0) {
                 System.out.println(cnt);
             }
             for(int i = 0; i < trainingImages.size(); i++) {
@@ -72,6 +72,32 @@ public class Driver {
     public void validation() {
         loadImages(Util.FACE_VALIDATION_DATA);
         loadLabels(Util.FACE_VALIDATION_LABELS);
+        int correct = 0;
+        p.load(Util.FACE_WEIGHTS_DIRECTORY + threshold + ".txt");
+        for(int i = 0; i < images.size(); i++) {
+            Image image = images.get(i);
+            int answer = -1;
+            double f = p.f(image);
+            if(f >= 0) {
+                answer = 1;
+            }
+            else {
+                answer = 0;
+            }
+            if(answer == labels[image.getID()]) {
+                correct ++;
+            }
+            System.out.println(image);
+            System.out.println("Model : " + answer + " Label : " + labels[image.getID()]);
+        }
+        double acc = (double)(correct)/(double)(images.size());
+        this.acc = acc;
+        System.out.println("Model was correct " + correct + " out of " + images.size() + " for an accuracy of " + acc);
+    }
+
+    public void test() {
+        loadImages(Util.FACE_TEST_DATA);
+        loadLabels(Util.FACE_TEST_LABELS);
         int correct = 0;
         p.load(Util.FACE_WEIGHTS_DIRECTORY + threshold + ".txt");
         for(int i = 0; i < images.size(); i++) {

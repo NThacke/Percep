@@ -10,7 +10,8 @@ public class Main {
             double threshold = i/10.0;
             Driver d = new Driver(threshold);
             // d.train();
-            d.validation();
+            // d.validation();
+            d.test();
             if(d.acc() > best) {
                 best =  d.acc();
                 t = threshold;
