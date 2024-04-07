@@ -1,0 +1,3 @@
+Trainging Output for Faces at 0.2 Training Capacity
+
+Training Time : 00:00:02

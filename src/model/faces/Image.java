@@ -10,10 +10,10 @@ public class Image {
 
     private int id;
 
-    public Image(RandomAccessFile file) {
+    public Image(int n, int a, int b, RandomAccessFile file) {
         image = new char[70][60];
         init(file);
-        calc_phi();
+        calc_phi(n, a, b);
     }
 
     private void init(RandomAccessFile file) {
@@ -37,8 +37,8 @@ public class Image {
         return phi;
     }
 
-    private void calc_phi() {
-        this.phi = phi(168, 5, 5);
+    private void calc_phi(int n, int a, int b) {
+        this.phi = phi(n, a, b);
     }
 
     private int[] phi(int n, int a, int b) throws IllegalArgumentException {

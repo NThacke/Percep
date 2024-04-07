@@ -15,7 +15,7 @@ public class Driver {
 
     private double threshold;
 
-    private int TRAINING_COUNT = 1000000;
+    private int TRAINING_COUNT = 100000;
 
     private int[] labels;
 
@@ -23,10 +23,17 @@ public class Driver {
 
     private double acc;
 
-    public Driver(double threshold) {
+    private int n;
+    private int a;
+    private int b;
+
+    public Driver(int n, int a, int b, double threshold) {
         this.threshold = threshold;
         images = new ArrayList<>();
-        p = new Perceptron();
+        p = new Perceptron(n);
+        this.a = a;
+        this.b = b;
+        this.n = n;
     }
 
     public void train() {
@@ -36,7 +43,7 @@ public class Driver {
         getTrainingSet();
         long start = System.currentTimeMillis();
         while(cnt < TRAINING_COUNT) {
-            if(cnt % 100000 == 0) {
+            if(cnt % 10000 == 0) {
                 System.out.println(cnt);
             }
             for(int i = 0; i < trainingImages.size(); i++) {
@@ -52,13 +59,13 @@ public class Driver {
             cnt++;
         }
         this.time = System.currentTimeMillis() - start;
-        p.save(Util.FACE_WEIGHTS_DIRECTORY + threshold + ".txt");
+        p.save(Util.FACE_WEIGHTS_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_a:" + a + ".txt");
         training_output();
     }
 
     private void training_output() {
         try {
-            FileWriter writer = new FileWriter(Util.FACES_OUTPUT_TRAINING_DIRECTORY + threshold + "output.txt");
+            FileWriter writer = new FileWriter(Util.FACES_OUTPUT_TRAINING_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_a:" + a + "output.txt");
             writer.write("Trainging Output for Faces at " + threshold + " Training Capacity\n\n");
             writer.write("Training Time : " + Util.hhmmss(time) + "\n");
             writer.close();
@@ -73,7 +80,7 @@ public class Driver {
         loadImages(Util.FACE_VALIDATION_DATA);
         loadLabels(Util.FACE_VALIDATION_LABELS);
         int correct = 0;
-        p.load(Util.FACE_WEIGHTS_DIRECTORY + threshold + ".txt");
+        p.load(Util.FACE_WEIGHTS_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_a:" + a + ".txt");
         for(int i = 0; i < images.size(); i++) {
             Image image = images.get(i);
             int answer = -1;
@@ -99,7 +106,7 @@ public class Driver {
         loadImages(Util.FACE_TEST_DATA);
         loadLabels(Util.FACE_TEST_LABELS);
         int correct = 0;
-        p.load(Util.FACE_WEIGHTS_DIRECTORY + threshold + ".txt");
+        p.load(Util.FACE_WEIGHTS_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_a:" + a + ".txt");
         for(int i = 0; i < images.size(); i++) {
             Image image = images.get(i);
             int answer = -1;
@@ -130,7 +137,7 @@ public class Driver {
             RandomAccessFile file = new RandomAccessFile(filename, "r");
             int id = 0;
             while(file.getFilePointer() < file.length()) {
-                Image image = new Image(file);
+                Image image = new Image(n, a, b, file);
                 image.setID(id);
                 images.add(image);
                 id++;
@@ -173,5 +180,14 @@ public class Driver {
                 trainingImages.add(images.remove(r));
             }
         }
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("N : " + n);
+        s.append("A : " + a);
+        s.append("B : " + b);
+        s.append("Threshold : " + threshold);
+        return s.toString();
     }
 }
