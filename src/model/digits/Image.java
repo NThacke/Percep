@@ -48,7 +48,7 @@ public class Image {
                     arr[c] = 1;
                 }
                 if(image[i][j] == '+') {
-                    arr[c] = 2;
+                    arr[c] = 1;
                 }
                 c++;
             }

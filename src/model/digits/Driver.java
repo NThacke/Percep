@@ -12,11 +12,13 @@ public class Driver {
 
     private int[] labels;
 
-    private static final int TRAINING_COUNT = 10000;
+    private static final int TRAINING_COUNT = 1000;
 
     private List<Image> images;
 
     private List<Image> trainingimages;
+
+    public double acc;
 
     /**
      * The amount of data to train on. {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
@@ -56,6 +58,35 @@ public class Driver {
             System.out.println("Model : " + answer + " Label : " + labels[image.getID()]);
         }
         double acc = (double)(correct)/(double)(images.size());
+        this.acc = acc;
+        System.out.println("Model was correct " + correct + " out of " + images.size() + " for an accuracy of " + acc);
+    }
+
+    public void test() {
+        loadImages(Util.DIGIT_TEST_DATA);
+        loadLabels(Util.DIGIT_TEST_LABELS);
+        int correct = 0;
+        load();
+        for(int i = 0; i < images.size(); i++) {
+            Image image = images.get(i);
+            double max_f = -1.0;
+            int answer = -1;
+            for(int j = 0; j < perceptrons.length; j++) {
+                Perceptron p = perceptrons[j];
+                double f = p.f(image);
+                if(f > max_f) {
+                    max_f = f;
+                    answer = j;
+                }
+            }
+            if(answer == labels[image.getID()]) {
+                correct ++;
+            }
+            System.out.println(image);
+            System.out.println("Model : " + answer + " Label : " + labels[image.getID()]);
+        }
+        double acc = (double)(correct)/(double)(images.size());
+        this.acc = acc;
         System.out.println("Model was correct " + correct + " out of " + images.size() + " for an accuracy of " + acc);
     }
 
@@ -66,7 +97,7 @@ public class Driver {
         getTrainingSet();
         long start = System.currentTimeMillis();
         while(cnt < TRAINING_COUNT) {
-            if( cnt % 1000  == 0) {
+            if( cnt % 100  == 0) {
                 System.out.println("Training : " + cnt);
             }
             for(int i = 0; i < trainingimages.size(); i++) {
