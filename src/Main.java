@@ -5,8 +5,8 @@ public class Main {
 
     private static final int[][] face_dimensions = {{42, 10, 10}, {168, 5, 5}, {1050, 2, 2}, {4200, 1, 1}};
     public static void main(String[] args) {
-        train_digits();
-        // digits();
+        // train_digits();
+        digits();
     
     }
 
