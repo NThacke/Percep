@@ -1,6 +1,8 @@
 package model.util;
 
 import java.util.*;
+import java.text.SimpleDateFormat;
+
 
 public class Util {
 
@@ -34,6 +36,17 @@ public class Util {
     public static final String DIGIT_TEST_LABELS = "src/data/digitdata/testlabels";
     public static final String DIGIT_VALIDATION_LABELS = "src/data/digitdata/validationlabels";
 
+    public static final String FACE_TRAINING_DATA = "src/data/facedata/facedatatrain";
+    public static final String FACE_VALIDATION_DATA = "src/data/facedata/facedatavalidation";
+    public static final String FACE_TEST_DATA = "src/data/facedata/facedatatest";
+
+    public static final String FACE_TRAINING_LABELS = "src/data/facedata/facedatatrainlabels";
+    public static final String FACE_VALIDATION_LABELS = "src/data/facedata/facedatavalidationlabels";
+    public static final String FACE_TEST_LABELS = "src/data/facedata/facedatatestlabels";
+
+    public static final String FACE_WEIGHTS_DIRECTORY = "src/data/weights/faces/";
+
+
 
     public static final long seed = 1;
     public static final Random random = new Random(seed);
@@ -42,5 +55,12 @@ public class Util {
     public static double sigmoid(double x) {
         double e = Math.exp(-x);
         return 1/(1+e);
+    }
+
+    public static String hhmmss(long milliseconds) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT")); // Setting timezone to GMT to ensure accurate calculation
+        String formattedTime = sdf.format(new Date(milliseconds));
+        return formattedTime;
     }
 }

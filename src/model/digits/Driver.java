@@ -85,20 +85,13 @@ public class Driver {
                 }
 
                 if(chosen_value != labels[image.getID()]) { //perceptron was wrong, increase weights for the correct answer (perceptrons[labels[image.id]]) and decrease weights for all others
-                    for(int j = 0; j < perceptrons.length; j++) {
-                        if(j == labels[image.getID()]) {
-                            perceptrons[j].increaseWeights(image);
-                        }
-                        else {
-                            perceptrons[j].decreaseWeights(image);
-                        }
-                    }
+                    perceptrons[labels[image.getID()]].increaseWeights(image);
+                    perceptrons[chosen_value].decreaseWeights(image);
                 }
             }
             cnt++;
         }
         long time = System.currentTimeMillis() - start;
-        
         save();
     }
 
