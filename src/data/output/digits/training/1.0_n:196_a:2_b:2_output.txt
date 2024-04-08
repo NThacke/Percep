@@ -1,0 +1,3 @@
+Training Output File for Pereptron Model {N : 196 A : 2 B : 2}
+
+Training Time : 20430

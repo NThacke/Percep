@@ -10,8 +10,8 @@ public class Perceptron {
 
     private static final double alpha = 0.001;
 
-    public Perceptron() {
-        weights = new double[785];
+    public Perceptron(int n) {
+        weights = new double[n+1];
     }
 
     public double f(Image image) {

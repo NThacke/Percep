@@ -20,15 +20,26 @@ public class Driver {
 
     public double acc;
 
+    long time;
+
     /**
      * The amount of data to train on. {0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0}
      */
     private double threshold;
 
-    public Driver(double threshold) {
+    private int n;
+
+    private int a;
+
+    private int b;
+
+    public Driver(int n, int a, int b, double threshold) {
+        this.n = n;
+        this.a = a;
+        this.b = b;
         perceptrons = new Perceptron[10];
         for(int i = 0; i < perceptrons.length; i++) {
-            perceptrons[i] = new Perceptron();
+            perceptrons[i] = new Perceptron(n);
         }
         images = new ArrayList<>();
         this.threshold = threshold;
@@ -164,34 +175,48 @@ public class Driver {
             }
             cnt++;
         }
-        long time = System.currentTimeMillis() - start;
+        this.time = System.currentTimeMillis() - start;
         save();
+        output();
+    }
+
+    private void output() {
+        try {
+            FileWriter writer = new FileWriter(Util.DIGIT_OUTPUT_TRAINING_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_output.txt");
+            writer.write("Training Output File for Pereptron Model " + this.toString());
+            writer.write("\n\n");
+            writer.write("Training Time : " + time + "\n");
+            writer.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void save() {
-        perceptrons[0].save(Util.DIGIT_0_DIRECTORY + threshold + "zero.txt");
-        perceptrons[1].save(Util.DIGIT_1_DIRECTORY + threshold + "one.txt");
-        perceptrons[2].save(Util.DIGIT_2_DIRECTORY + threshold + "two.txt");
-        perceptrons[3].save(Util.DIGIT_3_DIRECTORY + threshold + "three.txt");
-        perceptrons[4].save(Util.DIGIT_4_DIRECTORY + threshold + "four.txt");
-        perceptrons[5].save(Util.DIGIT_5_DIRECTORY + threshold + "five.txt");
-        perceptrons[6].save(Util.DIGIT_6_DIRECTORY + threshold + "six.txt");
-        perceptrons[7].save(Util.DIGIT_7_DIRECTORY + threshold + "seven.txt");
-        perceptrons[8].save(Util.DIGIT_8_DIRECTORY + threshold + "eight.txt");
-        perceptrons[9].save(Util.DIGIT_9_DIRECTORY + threshold + "nine.txt");
+        perceptrons[0].save(Util.DIGIT_0_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "zero.txt");
+        perceptrons[1].save(Util.DIGIT_1_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "one.txt");
+        perceptrons[2].save(Util.DIGIT_2_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "two.txt");
+        perceptrons[3].save(Util.DIGIT_3_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "three.txt");
+        perceptrons[4].save(Util.DIGIT_4_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "four.txt");
+        perceptrons[5].save(Util.DIGIT_5_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "five.txt");
+        perceptrons[6].save(Util.DIGIT_6_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" +  "six.txt");
+        perceptrons[7].save(Util.DIGIT_7_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "seven.txt");
+        perceptrons[8].save(Util.DIGIT_8_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "eight.txt");
+        perceptrons[9].save(Util.DIGIT_9_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "nine.txt");
     }
     
     private void load() {
-        perceptrons[0].load(Util.DIGIT_0_DIRECTORY + threshold + "zero.txt");
-        perceptrons[1].load(Util.DIGIT_1_DIRECTORY + threshold + "one.txt");
-        perceptrons[2].load(Util.DIGIT_2_DIRECTORY + threshold + "two.txt");
-        perceptrons[3].load(Util.DIGIT_3_DIRECTORY + threshold + "three.txt");
-        perceptrons[4].load(Util.DIGIT_4_DIRECTORY + threshold + "four.txt");
-        perceptrons[5].load(Util.DIGIT_5_DIRECTORY + threshold + "five.txt");
-        perceptrons[6].load(Util.DIGIT_6_DIRECTORY + threshold + "six.txt");
-        perceptrons[7].load(Util.DIGIT_7_DIRECTORY + threshold + "seven.txt");
-        perceptrons[8].load(Util.DIGIT_8_DIRECTORY + threshold + "eight.txt");
-        perceptrons[9].load(Util.DIGIT_9_DIRECTORY + threshold + "nine.txt");
+        perceptrons[0].load(Util.DIGIT_0_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "zero.txt");
+        perceptrons[1].load(Util.DIGIT_1_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "one.txt");
+        perceptrons[2].load(Util.DIGIT_2_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "two.txt");
+        perceptrons[3].load(Util.DIGIT_3_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "three.txt");
+        perceptrons[4].load(Util.DIGIT_4_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "four.txt");
+        perceptrons[5].load(Util.DIGIT_5_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "five.txt");
+        perceptrons[6].load(Util.DIGIT_6_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "six.txt");
+        perceptrons[7].load(Util.DIGIT_7_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "seven.txt");
+        perceptrons[8].load(Util.DIGIT_8_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "eight.txt");
+        perceptrons[9].load(Util.DIGIT_9_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_" + "nine.txt");
     }
     
     private void loadImages(String filename) {
@@ -199,7 +224,7 @@ public class Driver {
             RandomAccessFile file = new RandomAccessFile(filename, "r");
             int id = 0;
             while(file.getFilePointer() < file.length()) {
-                Image image = new Image(file);
+                Image image = new Image(n, a, b, file);
                 image.setID(id);
                 images.add(image);
                 id++;
@@ -242,5 +267,14 @@ public class Driver {
                 trainingimages.add(images.remove(r));
             }
         }
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append("{N : " + n);
+        s.append(" A : " + a);
+        s.append(" B : " + b + "}");
+        return s.toString();
+
     }
 }
