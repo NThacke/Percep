@@ -26,16 +26,36 @@ public class Perceptron {
     public void increaseWeights(Image image) {
         weights[0] += alpha;
         int[] phi = image.phi();
-        for(int i = 0; i < phi.length; i++) {
-            weights[i+1] += alpha * phi[i];
+        int left = 0;
+        int right = phi.length - 1;
+        while(left <= right) {
+            if(left == right) {
+                weights[left+1] += alpha * phi[left];
+            }
+            else {
+                weights[left+1] += alpha * phi[left];
+                weights[right+1] += alpha * phi[right];
+            }
+            left++;
+            right--;
         }
     }
 
     public void decreaseWeights(Image image) {
         weights[0] -= alpha;
         int[] phi = image.phi();
-        for(int i = 0; i < phi.length; i++) {
-            weights[i+1] -= alpha * phi[i];
+        int left = 0;
+        int right = phi.length - 1;
+        while(left <= right) {
+            if(left == right) {
+                weights[left+1] -= alpha * phi[left];
+            }
+            else {
+                weights[left+1] -= alpha * phi[left];
+                weights[right+1] -= alpha * phi[right];
+            }
+            left++;
+            right--;
         }
     }
 

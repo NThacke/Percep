@@ -14,8 +14,8 @@ public class Main {
     private static final int[][] digit_dimensions = {{16,7,7}, {49,4,4}, {196,2,2}, {784, 1, 1}};
 
     public static void main(String[] args) {
-        train_digits();
-        // digits();
+        // train_digits();
+        digits();
         // incorrect_digits();
         // digit_demo();
         // face_demo();
