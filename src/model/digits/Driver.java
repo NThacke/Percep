@@ -273,7 +273,8 @@ public class Driver {
         StringBuilder s = new StringBuilder();
         s.append("{N : " + n);
         s.append(" A : " + a);
-        s.append(" B : " + b + "}");
+        s.append(" B : " + b);
+        s.append(" D : " + threshold +"}");
         return s.toString();
 
     }

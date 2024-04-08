@@ -6,7 +6,7 @@ public class Main {
 
     // private static final Driver best_face = new Driver(168, 5, 5, 0.5); //91.3 % accuracy
 
-    // private static final Driver best_digit = new Driver(0.8); //82 % accuracy
+    private static final Driver best_digit = new Driver(49, 4, 4, 1.0); //82 % accuracy
 
     // private static final int[][] face_dimensions = {{42, 10, 10}, {168, 5, 5}, {1050, 2, 2}, {4200, 1, 1}};
 
