@@ -63,4 +63,13 @@ public class Util {
         String formattedTime = sdf.format(new Date(milliseconds));
         return formattedTime;
     }
+
+    public static String millisecondsToHMS(long milliseconds) {
+        long seconds = milliseconds / 1000;
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        seconds = seconds % 60;
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
 }

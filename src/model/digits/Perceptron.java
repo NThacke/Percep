@@ -8,7 +8,7 @@ public class Perceptron {
     
     double[] weights;
 
-    private static final double alpha = 0.001;
+    private static final double alpha = 0.01;
 
     public Perceptron(int n) {
         weights = new double[n+1];

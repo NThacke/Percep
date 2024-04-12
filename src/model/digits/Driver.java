@@ -6,7 +6,7 @@ import model.util.Util;
 
 import java.io.*;
 
-public class Driver {
+public class Driver implements Comparable<Driver> {
     
     private Perceptron[] perceptrons;
 
@@ -177,15 +177,20 @@ public class Driver {
         }
         this.time = System.currentTimeMillis() - start;
         save();
-        output();
     }
 
-    private void output() {
+    public void output() {
         try {
             FileWriter writer = new FileWriter(Util.DIGIT_OUTPUT_TRAINING_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_output.txt");
             writer.write("Training Output File for Pereptron Model " + this.toString());
             writer.write("\n\n");
-            writer.write("Training Time : " + time + "\n");
+            writer.write("N:" + n + "\nA:" + a + "\nB:" + b + "\nTraining Threshold : " + threshold);
+            writer.write("\n\n");
+            writer.write("Trained " + TRAINING_COUNT + " epochs\n");
+            writer.write("Training Time : " + time + " ms\n");
+            writer.write("Training Time : " + Util.millisecondsToHMS(time) + " HH:MM:SS\n");
+            String formattedAcc = String.format("%.2f", acc * 100);
+            writer.write("\nValidation Accuracy : " + formattedAcc + "%");
             writer.close();
         }
         catch(Exception e) {
@@ -274,8 +279,13 @@ public class Driver {
         s.append("{N : " + n);
         s.append(" A : " + a);
         s.append(" B : " + b);
-        s.append(" D : " + threshold +"}");
+        s.append(" D : " + threshold);
+        s.append("Accuracy : " + acc+"}");
         return s.toString();
 
+    }
+
+    public int compareTo(Driver other) {
+        return (int)(10000*(this.acc - other.acc));
     }
 }

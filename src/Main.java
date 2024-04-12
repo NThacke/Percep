@@ -1,4 +1,9 @@
 // import model.faces.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+
 import model.digits.*;
 
 public class Main {
@@ -14,8 +19,8 @@ public class Main {
     private static final int[][] digit_dimensions = {{16,7,7}, {49,4,4}, {196,2,2}, {784, 1, 1}};
 
     public static void main(String[] args) {
-        // train_digits();
-        digits();
+        train_digits();
+        // digits();
         // incorrect_digits();
         // digit_demo();
         // face_demo();
@@ -60,6 +65,9 @@ public class Main {
     }
 
     private static void train_digits() {
+        double best = 0.0;
+        Driver bestDriver = null;
+        List<Driver> list = new ArrayList<>();
         for(int i = 1; i<= 10;i++) {
             double d = i / (10.0);
             for(int j = 0; j < digit_dimensions.length; j++) {
@@ -70,9 +78,20 @@ public class Main {
                 System.out.println(a);
                 System.out.println(b);
                 Driver driver = new Driver(n, a, b, d);
-                driver.train();
+                // driver.train();
+                driver.validation();
+                if(driver.acc > best) {
+                    best = driver.acc;
+                    bestDriver = driver;
+                }
+                list.add(driver);
             }
         }
+        Collections.sort(list);
+        for(Driver d : list) {
+            System.out.println(d);
+        }
+        System.out.println("Best Driver is " + bestDriver.toString() + " with accuracy of " + bestDriver.acc);
     }
 
     // private static void faces() {
