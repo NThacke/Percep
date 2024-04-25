@@ -5,7 +5,7 @@ import java.io.*;
 
 import model.util.Util;
 
-public class Driver {
+public class FaceDriver implements Comparable<FaceDriver> {
     
     List<Image> images;
 
@@ -15,7 +15,7 @@ public class Driver {
 
     private double threshold;
 
-    private int TRAINING_COUNT = 100000;
+    private int TRAINING_COUNT = 1000;
 
     private int[] labels;
 
@@ -27,7 +27,7 @@ public class Driver {
     private int a;
     private int b;
 
-    public Driver(int n, int a, int b, double threshold) {
+    public FaceDriver(int n, int a, int b, double threshold) {
         this.threshold = threshold;
         images = new ArrayList<>();
         p = new Perceptron(n);
@@ -60,20 +60,25 @@ public class Driver {
         }
         this.time = System.currentTimeMillis() - start;
         p.save(Util.FACE_WEIGHTS_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_a:" + a + ".txt");
-        training_output();
     }
 
-    private void training_output() {
+    public void output() {
         try {
-            FileWriter writer = new FileWriter(Util.FACES_OUTPUT_TRAINING_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_a:" + a + "output.txt");
-            writer.write("Trainging Output for Faces at " + threshold + " Training Capacity\n\n");
-            writer.write("Training Time : " + Util.hhmmss(time) + "\n");
+            FileWriter writer = new FileWriter(Util.FACES_OUTPUT_TRAINING_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_b:" + b + "_output.txt");
+            writer.write("Training Output File for Pereptron Model " + this.toString());
+            writer.write("\n\n");
+            writer.write("N:" + n + "\nA:" + a + "\nB:" + b + "\nTraining Threshold : " + threshold);
+            writer.write("\n\n");
+            writer.write("Trained " + TRAINING_COUNT + " epochs\n");
+            writer.write("Training Time : " + time + " ms\n");
+            writer.write("Training Time : " + Util.millisecondsToHMS(time) + " HH:MM:SS\n");
+            String formattedAcc = String.format("%.2f", acc * 100);
+            writer.write("\nValidation Accuracy : " + formattedAcc + "%");
             writer.close();
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void validation() {
@@ -134,12 +139,13 @@ public class Driver {
 
     private void loadImages(String filename) {
         try {
+            this.images = new ArrayList<>();
             RandomAccessFile file = new RandomAccessFile(filename, "r");
             int id = 0;
             while(file.getFilePointer() < file.length()) {
                 Image image = new Image(n, a, b, file);
                 image.setID(id);
-                images.add(image);
+                this.images.add(image);
                 id++;
             }
             file.close();
@@ -151,11 +157,11 @@ public class Driver {
 
     private void loadLabels(String filename) {
         try {
-            labels = new int[images.size()];
+            this.labels = new int[images.size()];
             Scanner scanner = new Scanner(new File(filename));
             int i = 0;
             while(scanner.hasNext()) {
-                labels[i] = scanner.nextInt();
+                this.labels[i] = scanner.nextInt();
                 i++;
             }
             scanner.close();
@@ -184,10 +190,16 @@ public class Driver {
 
     public String toString() {
         StringBuilder s = new StringBuilder();
+        s.append("Faces ");
         s.append("N : " + n);
         s.append("A : " + a);
         s.append("B : " + b);
         s.append("Threshold : " + threshold);
+        s.append("Accuracy : " + acc);
         return s.toString();
+    }
+
+    public int compareTo(FaceDriver other) {
+        return (int)((10000000)*(this.acc - other.acc));
     }
 }

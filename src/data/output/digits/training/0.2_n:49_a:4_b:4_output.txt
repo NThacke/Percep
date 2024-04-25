@@ -1,3 +1,12 @@
-Training Output File for Pereptron Model {N : 49 A : 4 B : 4}
+Training Output File for Pereptron Model Digits N : 49 A : 4 B : 4 D : 0.2Accuracy : 0.707
 
-Training Time : 1206
+N:49
+A:4
+B:4
+Training Threshold : 0.2
+
+Trained 1000 epochs
+Training Time : 1189 ms
+Training Time : 00:00:01 HH:MM:SS
+
+Validation Accuracy : 70.70%

@@ -6,7 +6,7 @@ import model.util.Util;
 
 import java.io.*;
 
-public class Driver implements Comparable<Driver> {
+public class DigitsDriver implements Comparable<DigitsDriver> {
     
     private Perceptron[] perceptrons;
 
@@ -18,7 +18,7 @@ public class Driver implements Comparable<Driver> {
 
     private List<Image> trainingimages;
 
-    public double acc;
+    private double acc;
 
     long time;
 
@@ -33,7 +33,7 @@ public class Driver implements Comparable<Driver> {
 
     private int b;
 
-    public Driver(int n, int a, int b, double threshold) {
+    public DigitsDriver(int n, int a, int b, double threshold) {
         this.n = n;
         this.a = a;
         this.b = b;
@@ -150,7 +150,7 @@ public class Driver implements Comparable<Driver> {
         getTrainingSet();
         long start = System.currentTimeMillis();
         while(cnt < TRAINING_COUNT) {
-            if( cnt % 100  == 0) {
+            if( cnt % 10  == 0) {
                 System.out.println("Training : " + cnt);
             }
             for(int i = 0; i < trainingimages.size(); i++) {
@@ -226,12 +226,13 @@ public class Driver implements Comparable<Driver> {
     
     private void loadImages(String filename) {
         try {
+            this.images = new ArrayList<>();
             RandomAccessFile file = new RandomAccessFile(filename, "r");
             int id = 0;
             while(file.getFilePointer() < file.length()) {
                 Image image = new Image(n, a, b, file);
                 image.setID(id);
-                images.add(image);
+                this.images.add(image);
                 id++;
             }
             file.close();
@@ -243,11 +244,12 @@ public class Driver implements Comparable<Driver> {
 
     private void loadLabels(String filename) {
         try {
-            labels = new int[images.size()];
+            this.labels = new int[images.size()];
             Scanner scanner = new Scanner(new File(filename));
             int i = 0;
             while(scanner.hasNext()) {
-                labels[i] = scanner.nextInt();
+                this.labels[i] = scanner.nextInt();
+                // images.get(i).setLabel(this.labels[i]);
                 i++;
             }
             scanner.close();
@@ -276,16 +278,21 @@ public class Driver implements Comparable<Driver> {
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-        s.append("{N : " + n);
+        s.append("Digits ");
+        s.append("N : " + n);
         s.append(" A : " + a);
         s.append(" B : " + b);
         s.append(" D : " + threshold);
-        s.append("Accuracy : " + acc+"}");
+        s.append("Accuracy : " + acc);
         return s.toString();
 
     }
 
-    public int compareTo(Driver other) {
+    public double acc() {
+        return acc;
+    }
+
+    public int compareTo(DigitsDriver other) {
         return (int)(10000*(this.acc - other.acc));
     }
 }
