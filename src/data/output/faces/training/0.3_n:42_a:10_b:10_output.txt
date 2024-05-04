@@ -1,0 +1,12 @@
+Training Output File for Pereptron Model Faces N : 42A : 10B : 10Threshold : 0.3Accuracy : 0.7375415282392026
+
+N:42
+A:10
+B:10
+Training Threshold : 0.3
+
+Trained 1000 epochs
+Training Time : 21 ms
+Training Time : 00:00:00 HH:MM:SS
+
+Validation Accuracy : 73.75%

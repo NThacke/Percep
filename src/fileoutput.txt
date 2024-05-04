@@ -1,0 +1,120 @@
+Faces N : 42A : 10B : 10Threshold : 0.1Accuracy : 0.74
+Test Accuracy : 0.74
+
+Faces N : 42A : 10B : 10Threshold : 0.2Accuracy : 0.7533333333333333
+Test Accuracy : 0.7533333333333333
+
+Faces N : 42A : 10B : 10Threshold : 0.3Accuracy : 0.6933333333333334
+Test Accuracy : 0.6933333333333334
+
+Faces N : 42A : 10B : 10Threshold : 0.4Accuracy : 0.68
+Test Accuracy : 0.68
+
+Faces N : 42A : 10B : 10Threshold : 0.5Accuracy : 0.6466666666666666
+Test Accuracy : 0.6466666666666666
+
+Faces N : 42A : 10B : 10Threshold : 0.6Accuracy : 0.7
+Test Accuracy : 0.7
+
+Faces N : 42A : 10B : 10Threshold : 0.7Accuracy : 0.72
+Test Accuracy : 0.72
+
+Faces N : 42A : 10B : 10Threshold : 0.8Accuracy : 0.7466666666666667
+Test Accuracy : 0.7466666666666667
+
+Faces N : 42A : 10B : 10Threshold : 0.9Accuracy : 0.7333333333333333
+Test Accuracy : 0.7333333333333333
+
+Faces N : 42A : 10B : 10Threshold : 1.0Accuracy : 0.6
+Test Accuracy : 0.6
+
+Faces N : 168A : 5B : 5Threshold : 0.1Accuracy : 0.8133333333333334
+Test Accuracy : 0.8133333333333334
+
+Faces N : 168A : 5B : 5Threshold : 0.2Accuracy : 0.8266666666666667
+Test Accuracy : 0.8266666666666667
+
+Faces N : 168A : 5B : 5Threshold : 0.3Accuracy : 0.8466666666666667
+Test Accuracy : 0.8466666666666667
+
+Faces N : 168A : 5B : 5Threshold : 0.4Accuracy : 0.8733333333333333
+Test Accuracy : 0.8733333333333333
+
+Faces N : 168A : 5B : 5Threshold : 0.5Accuracy : 0.9133333333333333
+Test Accuracy : 0.9133333333333333
+
+Faces N : 168A : 5B : 5Threshold : 0.6Accuracy : 0.8666666666666667
+Test Accuracy : 0.8666666666666667
+
+Faces N : 168A : 5B : 5Threshold : 0.7Accuracy : 0.88
+Test Accuracy : 0.88
+
+Faces N : 168A : 5B : 5Threshold : 0.8Accuracy : 0.88
+Test Accuracy : 0.88
+
+Faces N : 168A : 5B : 5Threshold : 0.9Accuracy : 0.9066666666666666
+Test Accuracy : 0.9066666666666666
+
+Faces N : 168A : 5B : 5Threshold : 1.0Accuracy : 0.9
+Test Accuracy : 0.9
+
+Faces N : 1050A : 2B : 2Threshold : 0.1Accuracy : 0.7866666666666666
+Test Accuracy : 0.7866666666666666
+
+Faces N : 1050A : 2B : 2Threshold : 0.2Accuracy : 0.8
+Test Accuracy : 0.8
+
+Faces N : 1050A : 2B : 2Threshold : 0.3Accuracy : 0.86
+Test Accuracy : 0.86
+
+Faces N : 1050A : 2B : 2Threshold : 0.4Accuracy : 0.8533333333333334
+Test Accuracy : 0.8533333333333334
+
+Faces N : 1050A : 2B : 2Threshold : 0.5Accuracy : 0.8733333333333333
+Test Accuracy : 0.8733333333333333
+
+Faces N : 1050A : 2B : 2Threshold : 0.6Accuracy : 0.8933333333333333
+Test Accuracy : 0.8933333333333333
+
+Faces N : 1050A : 2B : 2Threshold : 0.7Accuracy : 0.8666666666666667
+Test Accuracy : 0.8666666666666667
+
+Faces N : 1050A : 2B : 2Threshold : 0.8Accuracy : 0.9
+Test Accuracy : 0.9
+
+Faces N : 1050A : 2B : 2Threshold : 0.9Accuracy : 0.8933333333333333
+Test Accuracy : 0.8933333333333333
+
+Faces N : 1050A : 2B : 2Threshold : 1.0Accuracy : 0.9066666666666666
+Test Accuracy : 0.9066666666666666
+
+Faces N : 4200A : 1B : 1Threshold : 0.1Accuracy : 0.7333333333333333
+Test Accuracy : 0.7333333333333333
+
+Faces N : 4200A : 1B : 1Threshold : 0.2Accuracy : 0.7933333333333333
+Test Accuracy : 0.7933333333333333
+
+Faces N : 4200A : 1B : 1Threshold : 0.3Accuracy : 0.8266666666666667
+Test Accuracy : 0.8266666666666667
+
+Faces N : 4200A : 1B : 1Threshold : 0.4Accuracy : 0.8466666666666667
+Test Accuracy : 0.8466666666666667
+
+Faces N : 4200A : 1B : 1Threshold : 0.5Accuracy : 0.8
+Test Accuracy : 0.8
+
+Faces N : 4200A : 1B : 1Threshold : 0.6Accuracy : 0.8666666666666667
+Test Accuracy : 0.8666666666666667
+
+Faces N : 4200A : 1B : 1Threshold : 0.7Accuracy : 0.8666666666666667
+Test Accuracy : 0.8666666666666667
+
+Faces N : 4200A : 1B : 1Threshold : 0.8Accuracy : 0.86
+Test Accuracy : 0.86
+
+Faces N : 4200A : 1B : 1Threshold : 0.9Accuracy : 0.8533333333333334
+Test Accuracy : 0.8533333333333334
+
+Faces N : 4200A : 1B : 1Threshold : 1.0Accuracy : 0.8533333333333334
+Test Accuracy : 0.8533333333333334
+

@@ -1,118 +1,146 @@
-// import model.faces.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 
-import model.digits.*;
+import java.io.FileWriter;
+
+import java.util.Collections;
+import java.util.*;
+
+import model.util.Driver;;
 
 public class Main {
     
 
-    // private static final Driver best_face = new Driver(168, 5, 5, 0.5); //91.3 % accuracy
-
-    private static final Driver best_digit = new Driver(49, 4, 4, 1.0); //82 % accuracy
-
-    // private static final int[][] face_dimensions = {{42, 10, 10}, {168, 5, 5}, {1050, 2, 2}, {4200, 1, 1}};
+    private static final int[][] face_dimensions = {{42, 10, 10}, {168, 5, 5}, {1050, 2, 2}, {4200, 1, 1}};
 
 
     private static final int[][] digit_dimensions = {{16,7,7}, {49,4,4}, {196,2,2}, {784, 1, 1}};
 
     public static void main(String[] args) {
-        train_digits();
-        // digits();
-        // incorrect_digits();
-        // digit_demo();
-        // face_demo();
-    
+        digitDemo();
+        // faceDemo();
     }
 
-    // private static void face_demo() {
-    //     best_face.test();
-    // }
-
-    // private static void digit_demo() {
-    //     Driver driver = new Driver(0.8);
-    //     driver.demo();
-    // }
-
-    // private static void incorrect_digits() {
-    //     Driver driver = new Driver(0.8);
-    //     driver.incorrect_digits();
-    // }
-
-    private static void digits() {
-        double best = 0.0;
-        Driver bestDriver = null;
-        for(int j = 0; j < digit_dimensions.length; j++) {
-            int n = digit_dimensions[j][0];
-            int a = digit_dimensions[j][1];
-            int b = digit_dimensions[j][2];
-        
-            for(int i = 1; i<= 10;i++) {
-                double d = i / (10.0);
-                Driver driver = new Driver(n, a, b, d);
-                // driver.validation();
-                driver.test();
-                double acc = driver.acc;
-                if(acc > best) {
-                    best = acc;
-                    bestDriver = driver;
-                }
-            }
-        }
-        System.out.println("Best accuracy is " + best + " w/ model " + bestDriver.toString());
+    private static void digitDemo() {
+        Driver d = new Driver(784, 1, 1, 0.9, Driver.DIGITS);
+        d.test();
     }
 
-    private static void train_digits() {
-        double best = 0.0;
-        Driver bestDriver = null;
-        List<Driver> list = new ArrayList<>();
-        for(int i = 1; i<= 10;i++) {
-            double d = i / (10.0);
-            for(int j = 0; j < digit_dimensions.length; j++) {
-                int n = digit_dimensions[j][0];
-                int a = digit_dimensions[j][1];
-                int b = digit_dimensions[j][2];
-                System.out.println(n);
-                System.out.println(a);
-                System.out.println(b);
-                Driver driver = new Driver(n, a, b, d);
-                // driver.train();
-                driver.validation();
-                if(driver.acc > best) {
-                    best = driver.acc;
-                    bestDriver = driver;
+    private static void faceDemo() {
+        Driver d = new Driver(168, 5, 5, 0.5, Driver.FACES);
+        d.test();
+    }
+
+    private static void digitTest() {
+        try {
+            FileWriter writer = new FileWriter("src/fileoutput.txt");
+            for(int i = 0; i < digit_dimensions.length; i++) {
+                int n = digit_dimensions[i][0];
+                int a = digit_dimensions[i][1];
+                int b = a;
+                for(int j = 1; j <= 10; j++) {
+                    Driver d = new Driver(n, a, b, (j/10.0), Driver.DIGITS);
+                    d.test();
+                    writer.append(d.toString() + "\n");
+                    writer.append("Test Accuracy : " + d.acc() + "\n\n");
                 }
-                list.add(driver);
+            }
+            writer.close();
+        }
+        catch(Exception e) {
+        e.printStackTrace();
+    }
+    }
+    private static void faceTest() {
+        try {
+            FileWriter writer = new FileWriter("src/fileoutput.txt");
+            for(int i = 0; i < face_dimensions.length; i++) {
+                int n = face_dimensions[i][0];
+                int a = face_dimensions[i][1];
+                int b = a;
+                for(int j = 1; j <= 10; j++) {
+                    Driver d = new Driver(n, a, b, (j/10.0), Driver.FACES);
+                    d.test();
+                    writer.append(d.toString() + "\n");
+                    writer.append("Test Accuracy : " + d.acc() + "\n\n");
+                }
+            }
+            writer.close();
+        }
+        catch(Exception e) {
+        e.printStackTrace();
+    }
+    }
+    private static void validateDigits() {
+        double best = 0;
+        for(int i = 0; i < digit_dimensions.length; i++) {
+            int n = digit_dimensions[i][0];
+            int a = digit_dimensions[i][1];
+            int b = a;
+            for(int j = 1; j <= 10; j++) {
+                Driver d = new Driver(n, a, b, (j/10), Driver.DIGITS);
+                d.validate();;
+                best = Math.max(best, d.acc());
             }
         }
-        Collections.sort(list);
-        for(Driver d : list) {
+        System.out.println("Best accuracy is " + best);
+    }
+
+    private static void validateFaces() {
+        double best = 0;
+        for(int i = 0; i < face_dimensions.length; i++) {
+            int n = face_dimensions[i][0];
+            int a = face_dimensions[i][1];
+            int b = a;
+            for(int j = 1; j <= 10; j++) {
+                Driver d = new Driver(n, a, b, (j/10), Driver.FACES);
+                d.validate();;
+                best = Math.max(best, d.acc());
+            }
+        }
+        System.out.println("Best accuracy is " + best);
+    }
+
+    private static void trainDigits() {
+        List<Driver> drivers = new ArrayList<>();
+
+        for(int i = 0; i < digit_dimensions.length; i++) {
+            int n = digit_dimensions[i][0];
+            int a = digit_dimensions[i][1];
+            int b = a;
+            for(int j = 1; j <= 10; j++) {
+                Driver d = new Driver(n, a, b, (j/10.0), Driver.DIGITS);
+                drivers.add(d);
+                d.train();
+                d.validate();
+                d.output();
+            }
+        }
+        Collections.sort(drivers);
+        for(Driver d : drivers) {
             System.out.println(d);
         }
-        System.out.println("Best Driver is " + bestDriver.toString() + " with accuracy of " + bestDriver.acc);
+        System.out.println("The best accuracy is " + drivers.get(drivers.size()-1));
     }
 
-    // private static void faces() {
-    //     double best = 0.0;
-    //     Driver best_driver = null;
+    private static void trainFaces() {
+        List<Driver> drivers = new ArrayList<>();
+        for(int i = 0; i < face_dimensions.length; i++) {
+            int n = face_dimensions[i][0];
+            int a = face_dimensions[i][1];
+            int b = a;
+            for(int j = 1; j <= 10; j++) {
+                Driver d = new Driver(n, a, b, (j/10.0), Driver.FACES);
+                drivers.add(d);
+                d.train();
+                d.validate();
+                d.output();
+            }
+        }
+        Collections.sort(drivers);
+        for(Driver d : drivers) {
+            System.out.println(d);
+        }
+        System.out.println("The best accuracy is " + drivers.get(drivers.size()-1));
+    }
 
-    //     for(int i = 0; i <face_dimensions.length; i++) {
-    //         int n = face_dimensions[i][0];
-    //         int a = face_dimensions[i][1];
-    //         int b = a;
-    //         for(int j = 1; j<= 10; j++) {
-    //             double threshold = j / 10.0;
-    //             Driver d = new Driver(n, a, b, threshold);
-    //             d.test();
-    //             if(d.acc() > best) {
-    //                 best = d.acc();
-    //                 best_driver = d;
-    //             }
-    //         }
-    //     }
-    //     System.out.println(best_driver.toString());
-    //     System.out.println(best);
-    // }
+    
 }

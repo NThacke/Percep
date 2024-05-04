@@ -1,3 +1,0 @@
-Training Output File for Pereptron Model {N : 0 A : 0 B : 0}
-
-Training Time : 0
