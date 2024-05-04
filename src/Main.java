@@ -15,8 +15,10 @@ public class Main {
     private static final int[][] digit_dimensions = {{16,7,7}, {49,4,4}, {196,2,2}, {784, 1, 1}};
 
     public static void main(String[] args) {
-        digitDemo();
+        // digitDemo();
         // faceDemo();
+        // faceStats();
+        digitStats();
     }
 
     private static void digitDemo() {
@@ -27,6 +29,63 @@ public class Main {
     private static void faceDemo() {
         Driver d = new Driver(168, 5, 5, 0.5, Driver.FACES);
         d.test();
+    }
+
+    private static void faceStats() {
+        try {
+            FileWriter writer = new FileWriter("src/faces_prediction_errors.txt");
+            for(int i = 0; i < face_dimensions.length; i++ ) {
+                int n = face_dimensions[i][0];
+                int a = face_dimensions[i][1];
+                int b = a;
+                for(int j = 1; j <= 10; j++) {
+                    Driver d = new Driver(n, a, b, (j/10.0), Driver.FACES);
+                    double [][] stats = d.stats(j/10.0);
+                    double[] prediction_errors = stats[1];
+                    double[] arr = stats[0];
+                    writer.write(d.toString() + "\n");
+                    writer.write("Prediction errors : ");
+                    for(int k = 0; k < prediction_errors.length; k++) {
+                        writer.write(prediction_errors[k] + "\t");
+                    }
+                    writer.write("\n");
+                    writer.write("Mean : " + arr[0] + "\n");
+                    writer.write("Sigma : " + arr[1] + "\n\n");
+                }
+            }
+            writer.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private static void digitStats() {
+        try {
+            FileWriter writer = new FileWriter("src/digits_prediction_errors.txt");
+            for(int i = 0; i < digit_dimensions.length; i++ ) {
+                int n = digit_dimensions[i][0];
+                int a = digit_dimensions[i][1];
+                int b = a;
+                for(int j = 1; j <= 10; j++) {
+                    Driver d = new Driver(n, a, b, (j/10.0), Driver.DIGITS);
+                    double [][] stats = d.stats(j/10.0);
+                    double[] prediction_errors = stats[1];
+                    double[] arr = stats[0];
+                    writer.write(d.toString() + "\n");
+                    writer.write("Prediction errors : ");
+                    for(int k = 0; k < prediction_errors.length; k++) {
+                        writer.write(prediction_errors[i] + "\t");
+                    }
+                    writer.write("\n");
+                    writer.write("Mean : " + arr[0] + "\n");
+                    writer.write("Sigma : " + arr[1] + "\n\n");
+                }
+            }
+            writer.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void digitTest() {
