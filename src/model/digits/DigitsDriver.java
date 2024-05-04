@@ -45,6 +45,41 @@ public class DigitsDriver implements Comparable<DigitsDriver> {
         this.threshold = threshold;
     }
 
+    public double[][] stats(double x) {
+        load();
+        System.out.println(this);
+        int sample_size = 5;
+        double[] prediction_errors = new double[sample_size];
+        for(int i = 0; i < sample_size; i++) {
+            loadImages(Util.DIGIT_TRAINING_DATA);
+            loadLabels(Util.DIGIT_TRAINING_LABELS);
+            getTrainingSet();
+
+            double incorrect = 0.0;
+            for(Image image : trainingimages) {
+                double max_f = -1.0;
+                int answer = -1;
+                for(int j = 0; j < perceptrons.length; j++) {
+                    Perceptron p = perceptrons[j];
+                    double f = p.f(image);
+                    if(f > max_f) {
+                        max_f = f;
+                        answer = j;
+                    }
+                }
+                if(answer != labels[image.getID()]) {
+                    incorrect++;
+                }
+            }
+            prediction_errors[i] = (incorrect) / ((double)(trainingimages.size()));
+        }
+        double[][] arr = new double[2][sample_size];
+        arr[1] = prediction_errors;
+        arr[0][0] = Util.mean(prediction_errors);
+        arr[0][1] = Util.stddv(prediction_errors);
+        return arr;
+    }
+
     public void incorrect_digits() {
         loadImages(Util.DIGIT_TEST_DATA);
         loadLabels(Util.DIGIT_TEST_LABELS);

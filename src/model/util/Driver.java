@@ -27,6 +27,19 @@ public class Driver implements Comparable<Driver> {
         this.type = type;
     }
 
+    public double[][] stats(double x) {
+        if(type == FACES) {
+            return faceDriver.stats(x);
+        }
+        else {
+            return digitsDriver.stats(x);
+        }
+    }
+
+    public void incorrect() {
+        digitsDriver.incorrect_digits();
+    }
+
     public void train() {
         if(type == FACES) {
             faceDriver.train();

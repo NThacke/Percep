@@ -36,6 +36,35 @@ public class FaceDriver implements Comparable<FaceDriver> {
         this.n = n;
     }
 
+    public double[][] stats(double x) {
+        p.load(Util.FACE_WEIGHTS_DIRECTORY + threshold + "_n:" + n + "_a:" + a + "_a:" + a + ".txt");
+        System.out.println(this);
+        int sample_size = 5;
+        double[] prediction_errors = new double[sample_size];
+        for(int i = 0; i < sample_size; i++) {
+            loadImages(Util.FACE_TRAINING_DATA);
+            loadLabels(Util.FACE_TRAINING_LABELS);
+            getTrainingSet();
+
+            double incorrect = 0.0;
+            for(Image image : trainingImages) {
+                double answer = p.f(image);
+                if( answer >= 0 && labels[image.getID()] == 0) {
+                    incorrect++;
+                }
+                if( answer < 0 && labels[image.getID()] == 1) {
+                    incorrect++;
+                }
+            }
+            prediction_errors[i] = (incorrect) / ((double)(trainingImages.size()));
+        }
+        double[][] arr = new double[2][sample_size];
+        arr[1] = prediction_errors;
+        arr[0][0] = Util.mean(prediction_errors);
+        arr[0][1] = Util.stddv(prediction_errors);
+        return arr;
+    }
+
     public void train() {
         int cnt = 0;
         loadImages(Util.FACE_TRAINING_DATA);

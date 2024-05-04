@@ -72,4 +72,40 @@ public class Util {
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
+
+    /**
+     * Calculates the standard deviation of a given array of values.
+     * 
+     * @param values
+     * @return
+     */
+    public static double stddv(double[] values) {
+        double n = values.length;
+        
+        double mean = mean(values);
+        
+        // Step 2: Calculate the sum of squared differences from the mean
+        double sumSquaredDifferences = 0;
+        for (double value : values) {
+            sumSquaredDifferences += Math.pow(value - mean, 2);
+        }
+        
+        // Step 3: Calculate the variance
+        double variance = sumSquaredDifferences / n;
+        
+        // Step 4: Calculate the standard deviation (square root of the variance)
+        double standardDeviation = Math.sqrt(variance);
+        
+        return standardDeviation;
+    }
+
+    public static double mean(double[] values) {
+        double n = values.length;
+        double sum = 0;
+        for (double value : values) {
+            sum += value;
+        }
+        double mean = sum / n;
+        return mean;
+    }
 }
